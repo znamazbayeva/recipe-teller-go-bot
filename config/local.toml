@@ -1,2 +1,3 @@
 Env="local"
-BotToken="5789904297:AAHEGC_K8xe-Pmmu2wiMc1AJ3AIuDRn6E7Y"
+BotToken="5525468230:AAFMdtNyEEVVuHHv-smF8Yw8GPOhG6boKZM"
+Dsn="root:zhanarys@tcp(127.0.0.1:3306)/recipe_bot_db?charset=utf8mb4&parseTime=True&loc=Local"
