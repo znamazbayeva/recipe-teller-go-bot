@@ -4,9 +4,10 @@ import (
 	"flag"
 	"log"
 	"upgrade/cmd/bot"
-
+	// "upgrade/internal/interfaces"
+	// "upgrade/internal/models"
 	"github.com/BurntSushi/toml"
-	"gopkg.in/telebot.v3"
+	// "gopkg.in/telebot.v3"
 )
 
 type Config struct {
@@ -28,9 +29,9 @@ func main() {
 	upgradeBot := bot.UpgradeBot{
 		Bot: bot.InitBot(cfg.BotToken),
 	}
-
-	upgradeBot.Bot.Handle("/start", func(ctx telebot.Context) error {
-		return ctx.Send("Привет, " + ctx.Sender().FirstName)
-	})
+	upgradeBot.Bot.Handle("/start",   upgradeBot.StartHandler)
+	upgradeBot.Bot.Handle("/random", upgradeBot.ShowRandomRecipe)
+	upgradeBot.Bot.Handle("/name", upgradeBot.ShowRecipeByName)
+	upgradeBot.Bot.Handle("/ingredient", upgradeBot.ShowRecipeByIngredient)
 	upgradeBot.Bot.Start()
 }

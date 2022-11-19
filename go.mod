@@ -3,6 +3,12 @@ module upgrade
 go 1.19
 
 require (
-	github.com/BurntSushi/toml v1.2.1 // indirect
-	gopkg.in/telebot.v3 v3.1.2 // indirect
+	github.com/BurntSushi/toml v1.2.1
+	github.com/tidwall/gjson v1.14.3
+	gopkg.in/telebot.v3 v3.1.2
+)
+
+require (
+	github.com/tidwall/match v1.1.1 // indirect
+	github.com/tidwall/pretty v1.2.0 // indirect
 )
