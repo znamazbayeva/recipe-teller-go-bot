@@ -6,11 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	// "encoding/json"
 	"gopkg.in/telebot.v3"
-	// "github.com/tidwall/gjson"
-	// "strconv"
-	// "upgrade/internal/models"
 	"upgrade/internal/repository"
 )
 
