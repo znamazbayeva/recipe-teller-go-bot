@@ -6,12 +6,39 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"upgrade/internal/models"
 	"gopkg.in/telebot.v3"
 	"upgrade/internal/repository"
 )
 
 type UpgradeBot struct {
-	Bot *telebot.Bot
+	Bot   *telebot.Bot
+	Users *repository.UserModel
+}
+
+func (bot *UpgradeBot) StartHandler(ctx telebot.Context) error {
+	newUser := models.User{
+		Name:       ctx.Sender().Username,
+		TelegramId: ctx.Chat().ID,
+		FirstName:  ctx.Sender().FirstName,
+		LastName:   ctx.Sender().LastName,
+		ChatId:     ctx.Chat().ID,
+	}
+
+	existUser, err := bot.Users.FindOne(ctx.Chat().ID)
+
+	if err != nil {
+		log.Printf("Такой пользователь уже существует %v", err)
+	}
+
+	if existUser == nil {
+		err := bot.Users.Create(newUser)
+		if err != nil {
+			log.Printf("Ошибка создания пользователя %v", err)
+		}
+	}
+
+		return ctx.Send("Привет, " + ctx.Sender().FirstName + "\nDon't know what to cook today? Reciper Teller is here to help you. \n\n 1. Get random recipe with /random \n 2. Get recipe by name /name {enter here recipe name}\n 3. Get random recipe with one ingredient /ingredient {enter ingredient name}")
 }
 
 func InitBot(token string) *telebot.Bot {
@@ -27,10 +54,6 @@ func InitBot(token string) *telebot.Bot {
 	}
 
 	return b
-}
-
-func (bot *UpgradeBot) StartHandler(ctx telebot.Context) error {
-	return ctx.Send("Привет, " + ctx.Sender().FirstName + "\nDon't know what to cook today? Reciper Teller is here to help you. \n\n 1. Get random recipe with /random \n 2. Get recipe by name /name {enter here recipe name}\n 3. Get random recipe with one ingredient /ingredient {enter ingredient name}")
 }
 
 func (bot *UpgradeBot) ShowRandomRecipe(ctx telebot.Context) error {
