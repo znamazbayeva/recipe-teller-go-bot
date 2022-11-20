@@ -2,16 +2,19 @@ package main
 
 import (
 	"flag"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 	"log"
 	"upgrade/cmd/bot"
+	"upgrade/internal/repository"
 
 	"github.com/BurntSushi/toml"
-	"gopkg.in/telebot.v3"
 )
 
 type Config struct {
 	Env      string
 	BotToken string
+	Dsn      string
 }
 
 func main() {
@@ -25,12 +28,18 @@ func main() {
 		log.Fatalf("Ошибка декодирования файла конфигов %v", err)
 	}
 
-	upgradeBot := bot.UpgradeBot{
-		Bot: bot.InitBot(cfg.BotToken),
+	db, err := gorm.Open(mysql.Open(cfg.Dsn), &gorm.Config{})
+
+	if err != nil {
+		log.Fatalf("Ошибка подключения к БД %v", err)
 	}
 
-	upgradeBot.Bot.Handle("/start", func(ctx telebot.Context) error {
-		return ctx.Send("Привет, " + ctx.Sender().FirstName)
-	})
+	upgradeBot := bot.UpgradeBot{
+		Bot:   bot.InitBot(cfg.BotToken),
+		Users: &repository.UserModel{Db: db},
+	}
+
+	upgradeBot.Bot.Handle("/start", upgradeBot.StartHandler)
+
 	upgradeBot.Bot.Start()
 }
