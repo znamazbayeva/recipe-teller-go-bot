@@ -6,9 +6,11 @@ import (
 	"gorm.io/gorm"
 	"log"
 	"upgrade/cmd/bot"
-	"upgrade/internal/repository"
-
+	// "upgrade/internal/interfaces"
+	// "upgrade/internal/models"
 	"github.com/BurntSushi/toml"
+	// "gopkg.in/telebot.v3"
+	"upgrade/internal/repository"
 )
 
 type Config struct {
@@ -38,8 +40,10 @@ func main() {
 		Bot:   bot.InitBot(cfg.BotToken),
 		Users: &repository.UserModel{Db: db},
 	}
-
-	upgradeBot.Bot.Handle("/start", upgradeBot.StartHandler)
+	upgradeBot.Bot.Handle("/start",   upgradeBot.StartHandler)
+	upgradeBot.Bot.Handle("/random", upgradeBot.ShowRandomRecipe)
+	upgradeBot.Bot.Handle("/name", upgradeBot.ShowRecipeByName)
+	upgradeBot.Bot.Handle("/ingredient", upgradeBot.ShowRecipeByIngredient)
 
 	upgradeBot.Bot.Start()
 }
