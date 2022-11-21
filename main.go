@@ -6,10 +6,9 @@ import (
 	"gorm.io/gorm"
 	"log"
 	"upgrade/cmd/bot"
-	// "upgrade/internal/interfaces"
-	// "upgrade/internal/models"
+	"fmt"
+	"net/http"
 	"github.com/BurntSushi/toml"
-	// "gopkg.in/telebot.v3"
 	"upgrade/internal/repository"
 )
 
@@ -22,8 +21,8 @@ type Config struct {
 func main() {
 	configPath := flag.String("config", "", "Path to config file")
 	flag.Parse()
-
 	cfg := &Config{}
+	fmt.Println(cfg, *configPath)
 	_, err := toml.DecodeFile(*configPath, cfg)
 
 	if err != nil {
