@@ -40,7 +40,10 @@ func main() {
 		Bot:   bot.InitBot(cfg.BotToken),
 		Users: &repository.UserModel{Db: db},
 	}
-	upgradeBot.Bot.Handle("/start",   upgradeBot.StartHandler)
+
+	bot.GetLetterFromAdmin()
+
+	upgradeBot.Bot.Handle("/start", upgradeBot.StartHandler)
 	upgradeBot.Bot.Handle("/random", upgradeBot.ShowRandomRecipe)
 	upgradeBot.Bot.Handle("/name", upgradeBot.ShowRecipeByName)
 	upgradeBot.Bot.Handle("/ingredient", upgradeBot.ShowRecipeByIngredient)

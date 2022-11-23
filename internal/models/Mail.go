@@ -4,10 +4,10 @@ import "gorm.io/gorm"
 
 type Mail struct {
 	gorm.Model
-    ID              uid       	`json:"id"`
-    Letter          string      `json:"letter"`
-    ReceivedDate    string      `json:"date"`
-    User            User
+	ID           uint   `json:"id"`
+	Letter       string `json:"letter"`
+	ReceivedDate string `json:"date"`
+	User         User
 }
 
 type MailModel struct {
