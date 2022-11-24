@@ -1,5 +1,7 @@
 # Recipe Teller Go Bot
 
+![Food gif here](https://github.com/znamazbayeva/recipe-teller-go-bot/blob/main/hungry.gif)
+
 1. Install dependencies
 
 ```
