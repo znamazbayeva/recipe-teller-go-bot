@@ -14,4 +14,12 @@ CREATE TABLE users(
                       deleted_at DATETIME
 );
 
+CREATE TABLE mails(
+                      id INTEGER PRIMARY KEY AUTO_INCREMENT,
+                      letter VARCHAR(255),
+                      ReceivedDate DATETIME default CURRENT_TIMESTAMP
+);
+
 SELECT * FROM users;
+
+
