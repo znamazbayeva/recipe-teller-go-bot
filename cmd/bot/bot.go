@@ -70,6 +70,7 @@ func GetLetterFromAdmin() {
 		for d := range msgs {
 			log.Printf("Received a message: %s", d.Body)
 			var received = string(d.Body)
+			db.Exec("insert into recipe_bot_db.mails (letter) values (?)", received)
 
 			for _, v := range ids {
 				user := telebot.User{ID: v}
